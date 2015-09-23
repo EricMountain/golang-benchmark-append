@@ -22,7 +22,7 @@ func main() {
 	for k, v := range psource {
 		fmt.Println(k, v)
 	}
-	doPoloAppendNoCopy()
+	doPoloAppend()
 }
 
 func setup(dim int) {
@@ -46,13 +46,14 @@ func doIdx(dim int) {
 	}
 }
 
-func doAppend(dim int) {
+func doAppend() {
 	dest := make([]int, 0, len(source)) // setting initial length to something other than 0 is a bad idea for append()
 	for i := range source {
 		dest = append(dest, source[i])
 	}
 }
 
+// Polo's case
 // map[int]struct
 // copy map values to a slice :
 // slice := make([]struct, len(map))
@@ -61,8 +62,6 @@ func doAppend(dim int) {
 //   slice[i] = v
 //   i++
 // }
-
-// Polo's case
 func doPolo() {
 	dest := make([]summat, len(psource))
 	i := 0
@@ -78,19 +77,4 @@ func doPoloAppend() {
 	for _, v := range psource {
 		dest = append(dest, v)
 	}
-	// for i := range dest {
-	// 	fmt.Println(dest[i])
-	// }
-}
-
-// Polo's case using append() and pointers to avoid copying.  This is dog slow.
-func doPoloAppendNoCopy() {
-	dest := make([]*summat, 0, len(psource))
-	for k := range psource {
-		x := psource[k]
-		dest = append(dest, &x)
-	}
-	// for i := range dest {
-	// 	fmt.Println(dest[i])
-	// }
 }

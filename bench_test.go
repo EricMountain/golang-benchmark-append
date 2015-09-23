@@ -1,12 +1,32 @@
+// Benchmarks comparing append() to straight copy
+//
+// Run:
+//   for i in $(seq 100 100 10000) ; do echo -- Size $i ; go test -bench . -- $i ; done > results.txt 2>&1
+//
+// With memory benchmarks:
+//   for i in $(seq 100 100 10000) ; do echo -- Size $i ; go test -bench . -benchmem -- $i ; done > results.txt 2>&1
 package main
 
 import (
 	"os"
+	"strconv"
 	"testing"
 )
 
+var (
+	dimension = 10
+)
+
 func TestMain(m *testing.M) {
+	// Yuck.  Size of the data to use for the struct is last arg.
+	if d, err := strconv.Atoi(os.Args[len(os.Args)-1]); err == nil {
+		dimension = d
+	}
 	os.Exit(m.Run())
+}
+
+// TestDummy avoids runtime warning about no tests
+func TestDummy(t *testing.T) {
 }
 
 func bDoIdx(d int, b *testing.B) {
@@ -21,7 +41,7 @@ func bDoAppend(d int, b *testing.B) {
 	setup(d)
 	b.ResetTimer()
 	for n := 0; n < b.N; n++ {
-		doAppend(d)
+		doAppend()
 	}
 }
 
@@ -41,80 +61,17 @@ func bDoPoloAppend(d int, b *testing.B) {
 	}
 }
 
-func bDoPoloAppendNoCopy(d int, b *testing.B) {
-	psetup(d)
-	b.ResetTimer()
-	for n := 0; n < b.N; n++ {
-		doPoloAppendNoCopy()
-	}
+func BenchmarkDoIdx(b *testing.B) {
+	bDoIdx(dimension, b)
 }
 
-func BenchmarkDoIdx_10(b *testing.B) {
-	bDoIdx(10, b)
+func BenchmarkDoAppend(b *testing.B) {
+	bDoAppend(dimension, b)
+}
+func BenchmarkPolo(b *testing.B) {
+	bDoPolo(dimension, b)
 }
 
-func BenchmarkDoAppend_10(b *testing.B) {
-	bDoAppend(10, b)
-}
-
-/*
-func BenchmarkDoIdx_100(b *testing.B) {
-	bDoIdx(100, b)
-}
-
-func BenchmarkDoAppend_100(b *testing.B) {
-	bDoAppend(100, b)
-}
-
-func BenchmarkDoIdx_1000(b *testing.B) {
-	bDoIdx(1000, b)
-}
-
-func BenchmarkDoAppend_1000(b *testing.B) {
-	bDoAppend(1000, b)
-}
-
-func BenchmarkDoIdx_10000(b *testing.B) {
-	bDoIdx(10000, b)
-}
-
-func BenchmarkDoAppend_10000(b *testing.B) {
-	bDoAppend(10000, b)
-}
-
-func BenchmarkDoIdx_100000(b *testing.B) {
-	bDoIdx(100000, b)
-}
-
-func BenchmarkDoAppend_100000(b *testing.B) {
-	bDoAppend(100000, b)
-}
-
-func BenchmarkDoIdx_1000000(b *testing.B) {
-	bDoIdx(1000000, b)
-}
-
-func BenchmarkDoAppend_1000000(b *testing.B) {
-	bDoAppend(1000000, b)
-}
-
-func BenchmarkDoIdx_10000000(b *testing.B) {
-	bDoIdx(10000000, b)
-}
-
-func BenchmarkDoAppend_10000000(b *testing.B) {
-	bDoAppend(10000000, b)
-}
-*/
-
-func BenchmarkPolo_10(b *testing.B) {
-	bDoPolo(10, b)
-}
-
-func BenchmarkPoloAppend_10(b *testing.B) {
-	bDoPoloAppend(10, b)
-}
-
-func BenchmarkPoloAppendNoCopy_10(b *testing.B) {
-	bDoPoloAppendNoCopy(10, b)
+func BenchmarkPoloAppend(b *testing.B) {
+	bDoPoloAppend(dimension, b)
 }
