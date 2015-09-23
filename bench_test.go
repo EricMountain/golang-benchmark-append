@@ -25,6 +25,30 @@ func bDoAppend(d int, b *testing.B) {
 	}
 }
 
+func bDoPolo(d int, b *testing.B) {
+	psetup(d)
+	b.ResetTimer()
+	for n := 0; n < b.N; n++ {
+		doPolo()
+	}
+}
+
+func bDoPoloAppend(d int, b *testing.B) {
+	psetup(d)
+	b.ResetTimer()
+	for n := 0; n < b.N; n++ {
+		doPoloAppend()
+	}
+}
+
+func bDoPoloAppendNoCopy(d int, b *testing.B) {
+	psetup(d)
+	b.ResetTimer()
+	for n := 0; n < b.N; n++ {
+		doPoloAppendNoCopy()
+	}
+}
+
 func BenchmarkDoIdx_10(b *testing.B) {
 	bDoIdx(10, b)
 }
@@ -33,6 +57,7 @@ func BenchmarkDoAppend_10(b *testing.B) {
 	bDoAppend(10, b)
 }
 
+/*
 func BenchmarkDoIdx_100(b *testing.B) {
 	bDoIdx(100, b)
 }
@@ -79,4 +104,17 @@ func BenchmarkDoIdx_10000000(b *testing.B) {
 
 func BenchmarkDoAppend_10000000(b *testing.B) {
 	bDoAppend(10000000, b)
+}
+*/
+
+func BenchmarkPolo_10(b *testing.B) {
+	bDoPolo(10, b)
+}
+
+func BenchmarkPoloAppend_10(b *testing.B) {
+	bDoPoloAppend(10, b)
+}
+
+func BenchmarkPoloAppendNoCopy_10(b *testing.B) {
+	bDoPoloAppendNoCopy(10, b)
 }
