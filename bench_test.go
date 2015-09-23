@@ -1,10 +1,10 @@
 // Benchmarks comparing append() to straight copy
 //
 // Run:
-//   for i in $(seq 100 100 10000000) ; do echo -- Size $i ; go test -bench . -- $i ; done > results.txt 2>&1
+//   for i in $(seq 1000 1000 10000000) ; do echo -- Size $i ; go test -bench . -- $i ; done > results.txt 2>&1
 //
 // With memory benchmarks:
-//   for i in $(seq 100 100 10000) ; do echo -- Size $i ; go test -bench . -benchmem -- $i ; done > results.txt 2>&1
+//   for i in $(seq 1000 1000 10000000) ; do echo -- Size $i ; go test -bench . -benchmem -- $i ; done > results.txt 2>&1
 package main
 
 import (
