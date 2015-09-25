@@ -1,10 +1,17 @@
 // Benchmarks comparing append() to straight copy
 //
 // Run:
-//   for i in $(seq 1000 1000 10000000) ; do echo -- Size $i ; go test -bench . -- $i ; done > results.txt 2>&1
+//   for i in $(seq 10000 10000 10000000) ; do echo -- Size $i ; go test -bench . -- $i ; done > results.txt 2>&1
 //
 // With memory benchmarks:
-//   for i in $(seq 1000 1000 10000000) ; do echo -- Size $i ; go test -bench . -benchmem -- $i ; done > results.txt 2>&1
+//   for i in $(seq 10000 10000 10000000) ; do echo -- Size $i ; go test -bench . -benchmem -- $i ; done > results.txt 2>&1
+//
+// How long it ran:
+// grep ok results.txt | awk '{print($3)}' | sed -e 's/s//' | awk 'BEGIN { x = 0 } {x+=$1} END {print(x)}'
+//
+// How many tests ran:
+// grep ok results.txt | wc -l
+//
 package main
 
 import (
