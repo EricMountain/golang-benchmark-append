@@ -9,6 +9,8 @@ mkdir $d
 for i in $(seq 10000 10000 50000) ; do echo -- Size $i ; go test -bench . -- $i ; done > $d/results.txt 2>&1
 
 cd $d
+sudo lshw > lshw.txt
+go version > go-version.txt
 ../parse_results.py > plot.dat
 gnuplot < ../plot.gp
 cd -
