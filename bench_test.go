@@ -29,6 +29,8 @@ func TestMain(m *testing.M) {
 	if d, err := strconv.Atoi(os.Args[len(os.Args)-1]); err == nil {
 		dimension = d
 	}
+	setup(dimension)
+	psetup(dimension)
 	os.Exit(m.Run())
 }
 
@@ -37,32 +39,24 @@ func TestDummy(t *testing.T) {
 }
 
 func bDoIdx(d int, b *testing.B) {
-	setup(d)
-	b.ResetTimer()
 	for n := 0; n < b.N; n++ {
 		doIdx(d)
 	}
 }
 
 func bDoAppend(d int, b *testing.B) {
-	setup(d)
-	b.ResetTimer()
 	for n := 0; n < b.N; n++ {
 		doAppend()
 	}
 }
 
 func bDoPolo(d int, b *testing.B) {
-	psetup(d)
-	b.ResetTimer()
 	for n := 0; n < b.N; n++ {
 		doPolo()
 	}
 }
 
 func bDoPoloAppend(d int, b *testing.B) {
-	psetup(d)
-	b.ResetTimer()
 	for n := 0; n < b.N; n++ {
 		doPoloAppend()
 	}
