@@ -1,3 +1,5 @@
 *~
 .~lock.*
 
+append_bench.test
+cpuprofile.out
