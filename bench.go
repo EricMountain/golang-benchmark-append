@@ -39,7 +39,7 @@ func psetup(dim int) {
 	}
 }
 
-func doIdx(dim int) {
+func doIdx() {
 	dest := make([]int, len(source))
 	for i := range source {
 		dest[i] = source[i]
@@ -72,9 +72,10 @@ func doPolo() {
 }
 
 // Polo's case using append()
-func doPoloAppend() {
+func doPoloAppend() []summat {
 	dest := make([]summat, 0, len(psource))
 	for _, v := range psource {
 		dest = append(dest, v)
 	}
+	return dest
 }

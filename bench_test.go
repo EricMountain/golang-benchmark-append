@@ -29,8 +29,10 @@ func TestMain(m *testing.M) {
 	if d, err := strconv.Atoi(os.Args[len(os.Args)-1]); err == nil {
 		dimension = d
 	}
+
 	setup(dimension)
 	psetup(dimension)
+
 	os.Exit(m.Run())
 }
 
@@ -38,41 +40,30 @@ func TestMain(m *testing.M) {
 func TestDummy(t *testing.T) {
 }
 
-func bDoIdx(d int, b *testing.B) {
+func bench(b *testing.B, f func()) {
 	for n := 0; n < b.N; n++ {
-		doIdx(d)
+		f()
 	}
 }
 
-func bDoAppend(d int, b *testing.B) {
+func BenchmarkIntIdx(b *testing.B) {
+	bench(b, doIdx)
+}
+
+func BenchmarkIntAppend(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		doAppend()
 	}
 }
 
-func bDoPolo(d int, b *testing.B) {
+func BenchmarkPoloIdx(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		doPolo()
 	}
 }
 
-func bDoPoloAppend(d int, b *testing.B) {
+func BenchmarkPoloAppend(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		doPoloAppend()
 	}
-}
-
-func BenchmarkDoIdx(b *testing.B) {
-	bDoIdx(dimension, b)
-}
-
-func BenchmarkDoAppend(b *testing.B) {
-	bDoAppend(dimension, b)
-}
-func BenchmarkPolo(b *testing.B) {
-	bDoPolo(dimension, b)
-}
-
-func BenchmarkPoloAppend(b *testing.B) {
-	bDoPoloAppend(dimension, b)
 }

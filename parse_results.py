@@ -19,11 +19,11 @@ with open('results.txt', 'r') as f:
             continue
         if line.startswith('PASS') or line.startswith('ok'):
             continue
-        if line.startswith('BenchmarkDoIdx'):
+        if line.startswith('BenchmarkIntIdx'):
             ns = parseBench(line)
             r['Idx'] = ns
             continue
-        if line.startswith('BenchmarkDoAppend'):
+        if line.startswith('BenchmarkIntAppend'):
             ns = parseBench(line)
             r['Append'] = ns
             continue
