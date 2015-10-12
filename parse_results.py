@@ -21,22 +21,22 @@ with open('results.txt', 'r') as f:
             continue
         if line.startswith('BenchmarkIntIdx'):
             ns = parseBench(line)
-            r['Idx'] = ns
+            r['IntIdx'] = ns
             continue
         if line.startswith('BenchmarkIntAppend'):
             ns = parseBench(line)
-            r['Append'] = ns
+            r['IntAppend'] = ns
             continue
         if line.startswith('BenchmarkPoloAppend'):
             ns = parseBench(line)
             r['PoloAppend'] = ns
             continue
-        if line.startswith('BenchmarkPolo'):
+        if line.startswith('BenchmarkPoloIdx'):
             ns = parseBench(line)
-            r['Polo'] = ns
+            r['PoloIdx'] = ns
 
-print('Size Idx Append Polo PoloAppend')
+print('Size IntIdx IntAppend PoloIdx PoloAppend')
 sizes = sorted(t.keys())
 for size in sizes:
     b = t[size]
-    print(size, b['Idx'], b['Append'], b['Polo'], b['PoloAppend'])
+    print(size, b['IntIdx'], b['IntAppend'], b['PoloIdx'], b['PoloAppend'])

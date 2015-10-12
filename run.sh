@@ -3,8 +3,8 @@
 set -e
 
 # GC setting: default is 100 (https://golang.org/pkg/runtime/); off to disable.
-readonly gc=off
-readonly benchtime=1s
+readonly gc=100
+readonly benchtime=3s
 
 readonly d="results-$(date +%Y.%m.%d)_$(hostname)"
 
